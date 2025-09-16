@@ -1,7 +1,7 @@
 {
-  "name": "trading-vue-js",
-  "version": "1.0.2",
-  "description": "Hackable charting lib for traders",
+  "name": "trading-vue3-js",
+  "version": "1.0.3",
+  "description": "Customizable charting lib for traders. Based on https://github.com/C451/trading-vue-js by C451.",
   "main": "./dist/trading-vue.js",
   "scripts": {
     "test": "webpack serve --config webpack/test.config.js --mode development --progress --hot",
@@ -12,18 +12,7 @@
     "build": "webpack  --config webpack/build.config.js --mode production --progress",
     "cdn": "webpack serve --config webpack/cdn.config.js --mode development --progress --hot"
   },
-  "ava": {
-    "babel": {
-      "compileAsTests": [
-        "test/auto_tests/**/*",
-        "src/**/*"
-      ]
-    },
-    "files": [
-      "test/auto_tests/**/*"
-    ]
-  },
-  "author": "C451",
+  "author": "SaViGnAnO",
   "license": "MIT",
   "files": [
     "dist/*",
@@ -40,42 +29,42 @@
     "finviz",
     "trading-systems"
   ],
-  "homepage": "https://github.com/C451/trading-vue-js#readme",
-  "repository": "github:C451/trading-vue-js",
+  "homepage": "https://github.com/SaViGnAnO/trading-vue3-js#readme",
+  "repository": "github:SaViGnAnO/trading-vue3-js",
   "devDependencies": {
     "@ava/babel": "^1.0.1",
-    "@babel/core": "^7.13.10",
-    "@babel/plugin-transform-parameters": "^7.13.0",
-    "@babel/plugin-transform-runtime": "^7.13.10",
-    "@babel/preset-env": "^7.13.10",
-    "ava": "^3.15.0",
-    "babel-loader": "^8.2.2",
-    "css-loader": "^3.6.0",
-    "eslint": "^7.21.0",
-    "eslint-config-eslint": "^7.0.0",
-    "eslint-plugin-vue": "^7.7.0",
-    "html-webpack-plugin": "^5.3.1",
+    "@babel/core": "^7.25.0",
+    "@babel/plugin-transform-parameters": "^7.25.0",
+    "@babel/plugin-transform-runtime": "^7.25.0",
+    "@babel/preset-env": "^7.25.0",
+  "@babel/register": "^7.25.0",
+    "@vue/compiler-sfc": "^3.4.38",
+    "ava": "^5.3.1",
+    "babel-loader": "^9.1.3",
+    "css-loader": "^6.10.0",
+    "eslint": "^9.8.0",
+    "eslint-config-eslint": "^9.0.0",
+    "eslint-plugin-vue": "^9.27.0",
+    "html-webpack-plugin": "^5.5.3",
     "null-loader": "^4.0.1",
     "raw-loader": "^4.0.2",
     "request": "^2.88.2",
-    "terser-webpack-plugin": "^5.1.1",
-    "tulind": "^0.8.18",
+    "terser-webpack-plugin": "^5.3.10",
     "vue-codemirror": "^4.0.6",
-    "vue-loader": "^15.9.6",
+    "vue-loader": "^17.4.2",
     "vue-style-loader": "^4.1.3",
-    "vue-template-compiler": "^2.6.12",
-    "webpack": "^5.24.4",
-    "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.2",
     "worker-loader": "^3.0.8"
   },
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
+    "@babel/runtime": "^7.25.0",
     "arrayslicer": "^1.2.3",
     "hammerjs": "^2.0.8",
     "hamsterjs": "^1.1.3",
     "lz-string": "^1.4.4",
-    "moment": "^2.29.1",
-    "vue": "^2.6.12"
+    "moment": "^2.30.1",
+    "vue": "^3.4.38"
   }
 }
