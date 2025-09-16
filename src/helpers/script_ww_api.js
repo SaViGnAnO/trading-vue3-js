@@ -7,19 +7,22 @@ import Utils from '../stuff/utils.js'
 import lz from 'lz-string'
 import {} from './script_ww.js' // For webworker-loader to find the ww
 
+const HAS_WINDOW = typeof window !== 'undefined'
+
 class WebWork {
 
     constructor(dc) {
         this.dc = dc
         this.tasks = {}
         this.onevent = () => {}
-        this.start()
+    if (HAS_WINDOW) this.start()
     }
 
     start() {
-        if (this.worker) this.worker.terminate()
+    if (!HAS_WINDOW) return
+    if (this.worker) this.worker.terminate()
         // URL.createObjectURL
-        window.URL = window.URL || window.webkitURL
+    window.URL = window.URL || window.webkitURL
         let data = lz.decompressFromBase64(worker_data[0])
         var blob
         try {
@@ -47,20 +50,22 @@ class WebWork {
     }
 
     send(msg, tx_keys) {
+        if (!HAS_WINDOW) return
         if (this.dc.sett.node_url) {
             return this.send_node(msg, tx_keys)
         }
         if (tx_keys) {
             let tx_objs = tx_keys.map(k => msg.data[k])
-            this.worker.postMessage(msg, tx_objs)
+            if (this.worker) this.worker.postMessage(msg, tx_objs)
         } else {
-            this.worker.postMessage(msg)
+            if (this.worker) this.worker.postMessage(msg)
         }
     }
 
     // Send to node.js via websocket
     send_node(msg, tx_keys) {
-        if (!this.socket) this.start_socket()
+    if (!HAS_WINDOW) return
+    if (!this.socket) this.start_socket()
         if (this.socket && this.socket.readyState) {
             // Send the old messages first
             while(this.msg_queue.length) {

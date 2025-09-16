@@ -1,4 +1,4 @@
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const WWPlugin = require('./ww_plugin.js')
@@ -74,9 +74,14 @@ module.exports = [{
         }
     ],
     devServer: {
-        onListening: function(server) {
-            const port = server.listeningApp.address().port
-            global.port = port
+        setupMiddlewares: (middlewares, devServer) => {
+            if (devServer && devServer.server) {
+                try {
+                    const addr = devServer.server.address()
+                    if (addr && addr.port) global.port = addr.port
+                } catch(e) {}
+            }
+            return middlewares
         }
     }
 }, {

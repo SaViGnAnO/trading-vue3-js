@@ -54,10 +54,17 @@ export default {
         this.$emit('custom-event', {
             event: 'register-tools', args: tools
         })
-        this.$on('custom-event', e =>
-            this.on_ux_event(e, 'grid'))
+        // Vue 3 removed instance $on; use an internal simple bus
+        if (!this._bus) {
+            this._bus = {
+                handlers: [],
+                emit: (e) => this._bus.handlers.forEach(h => h(e)),
+                on: (h) => this._bus.handlers.push(h)
+            }
+        }
+        this._bus.on(e => this.on_ux_event(e, 'grid'))
     },
-    beforeDestroy () {
+    beforeUnmount () {
         if (this.renderer) this.renderer.destroy()
     },
     mounted() {

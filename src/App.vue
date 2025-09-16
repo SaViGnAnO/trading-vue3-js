@@ -26,7 +26,7 @@ export default {
         window.addEventListener('resize', this.onResize)
         window.dc = this.chart
     },
-    beforeDestroy() {
+    beforeUnmount() {
         window.removeEventListener('resize', this.onResize)
     },
     data() {

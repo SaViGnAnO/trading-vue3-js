@@ -9,15 +9,15 @@ export default {
     render(h) { return h() },
     created: function () {
         this.$emit('register-kb-listener', {
-            id: this._uid,
+        id: this._kid || (this._kid = ++KeyboardListener._idc),
             keydown: this.keydown,
             keyup: this.keyup,
             keypress: this.keypress
         })
     },
-    beforeDestroy: function () {
+    beforeUnmount: function () {
         this.$emit('remove-kb-listener', {
-            id: this._uid
+        id: this._kid
         })
     },
     methods: {
@@ -32,5 +32,9 @@ export default {
         },
     }
 }
+
+// Simple incremental id counter (Vue 3 removed _uid from public instance)
+// Not reactive and only used for bookkeeping in parent.
+KeyboardListener._idc = 0
 
 </script>

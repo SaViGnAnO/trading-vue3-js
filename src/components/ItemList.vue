@@ -23,7 +23,7 @@ export default {
             'mousedown', this.onmousedown
         )
     },
-    beforeDestroy() {
+        beforeUnmount() {
         window.removeEventListener(
             'mousedown', this.onmousedown
         )

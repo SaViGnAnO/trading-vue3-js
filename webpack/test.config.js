@@ -1,4 +1,4 @@
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WWPlugin = require('./ww_plugin.js')
 const webpack = require('webpack')
@@ -58,18 +58,21 @@ module.exports = {
                 changeOrigin: true
             },
         },
-        onListening: function(server) {
-            const port = server.listeningApp.address().port
-            global.port = port
-        },
-        before(app){
-            app.get("/debug", function(req, res) {
+        setupMiddlewares: (middlewares, devServer) => {
+            if (devServer && devServer.server) {
+                try {
+                    const addr = devServer.server.address()
+                    if (addr && addr.port) global.port = addr.port
+                } catch(e) {}
+            }
+            devServer.app.get('/debug', function(req, res) {
                 try {
                     let argv = JSON.parse(req.query.argv)
                     console.log(...argv)
                 } catch(e) {}
-                res.send("[OK]")
+                res.send('[OK]')
             })
+            return middlewares
         }
     },
     devtool: 'source-map'

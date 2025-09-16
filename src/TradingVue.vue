@@ -249,7 +249,7 @@ export default {
     data() {
         return { reset: 0, tip: null }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         this.custom_event({ event: 'before-destroy' })
         this.ctrl_destroy()
     },

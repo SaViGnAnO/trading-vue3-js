@@ -6,11 +6,14 @@ import Utils from '../stuff/utils.js'
 import * as u from './script_utils.js'
 import { DatasetWW } from './dataset.js'
 
+// Test environment (Node) has no self (WebWorker global)
+const _self = typeof self !== 'undefined' ? self : null
+
 var data_requested = false
 
 // DC => WW
 
-self.onmessage = async e => {
+if (_self) _self.onmessage = async e => {
     //console.log('Worker got:', e.data.type)
     switch(e.data.type) {
 
@@ -25,7 +28,7 @@ self.onmessage = async e => {
             var req = se.data_required(e.data.data.s)
             if (req && !data_requested) {
                 data_requested = true
-                self.postMessage({
+                _self.postMessage({
                     type: 'request-data', data: req
                 })
             }
@@ -53,7 +56,7 @@ self.onmessage = async e => {
             break
 
         case 'upload-data':
-            self.postMessage({ type: 'data-uploaded' })
+            _self.postMessage({ type: 'data-uploaded' })
 
             await Utils.pause(1)
 
@@ -96,7 +99,7 @@ self.onmessage = async e => {
 
         case 'get-dataset':
 
-            self.postMessage({
+            _self.postMessage({
                 id: e.data.id,
                 data: se.data[e.data.data]
             })
@@ -152,7 +155,7 @@ se.send = (type, data) => {
         case 'module-data':
         case 'script-signal':
 
-            self.postMessage({type, data})
+            if (_self) _self.postMessage({type, data})
 
             break
 

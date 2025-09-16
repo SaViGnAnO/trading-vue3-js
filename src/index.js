@@ -20,16 +20,20 @@ const primitives = {
     Candle, Volbar, Line, Pin, Price, Ray, Seg
 }
 
-TradingVue.install = function (Vue) {
-    Vue.component(TradingVue.name, TradingVue)
+// Vue 3 plugin API
+TradingVue.install = function(app) {
+    app.component(TradingVue.name, TradingVue)
 }
 
-if (typeof window !== 'undefined' && window.Vue) {
-    window.Vue.use(TradingVue)
+// UMD auto-install (if user includes via <script> tag and has Vue global)
+if (typeof window !== 'undefined' && window.Vue && window.Vue.createApp) {
+    // For Vue 3 we can't auto-use the component the same way as Vue2.
+    // Provide helper to register manually: window.TradingVueLib.install(app)
     window.TradingVueLib = {
         TradingVue, Overlay, Utils, Constants,
         Candle, Volbar, layout_cnv, layout_vol,
-        DataCube, Tool, Interface, primitives
+        DataCube, Tool, Interface, primitives,
+        install(app) { app.use(TradingVue) }
     }
 }
 

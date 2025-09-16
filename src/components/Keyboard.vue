@@ -12,7 +12,7 @@ export default {
         window.addEventListener('keypress', this.keypress)
         this._listeners = {}
     },
-    beforeDestroy: function () {
+        beforeUnmount: function () {
         window.removeEventListener('keydown', this.keydown)
         window.removeEventListener('keyup', this.keyup)
         window.removeEventListener('keypress', this.keypress)
